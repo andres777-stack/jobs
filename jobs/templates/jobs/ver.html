@@ -1,0 +1,25 @@
+{% extends 'jobs/base.html' %}
+
+{% block titulo %} Dashboard! {% endblock %}
+
+{% block contenido %}
+
+<div class="row">
+
+    <div class="col-6">
+        <h3 class="mt-3 mb-2">Title: {{ job.title }}</h3>
+        <p>Location: {{ job.location }}</p>
+        <p>Owner: {{ job.owner.nombre  }} {{ job.owner.apellido }}</p>
+        <p>Posted on: {{ job.created_at }}</p>
+        {% if request.session.usuario.nombre != job.owner.nombre %}
+        <a href="{% url 'jobs:adding' id=job.id %}">Add to my jobs!</a>
+        {% endif%}
+    </div>
+    <div class="col-6">
+        <a href="{% url 'jobs:index' %}">Go Back!</a>
+        
+    </div>
+</div>
+
+
+{% endblock %}

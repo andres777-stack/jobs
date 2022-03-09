@@ -1,0 +1,69 @@
+{% extends 'jobs/base.html' %}
+
+{% block titulo %} Dashboard! {% endblock %}
+
+{% block contenido %}
+
+<div class="row">
+
+    <div class="col-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Job</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in jobs %}
+                {% if usuario == job.owner %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.location }}</td>
+                    <td>
+                        <a href="{% url 'jobs:edit' id=job.id %}">Edit</a>
+                        <a href="{% url 'jobs:cancel' id=job.id %}">Cancel</a>
+                        <a href="{% url 'jobs:ver' id=job.id %}">View</a>
+                    </td>
+                </tr>
+                {%else%}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.location }}</td>
+                    <td>
+                        <a href="{% url 'jobs:ver' id=job.id %}">View</a>
+                        <a href="{% url 'jobs:adding' id=job.id %}">Add</a>
+                    </td>
+                </tr>
+                {%endif%}
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Job</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for job in usuario.jobs.all %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>
+                        <a href="{% url 'jobs:ver' id=job.id %}">View</a>
+                        <a href="{% url 'jobs:cancel' id=job.id %}">Done</a>
+
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
